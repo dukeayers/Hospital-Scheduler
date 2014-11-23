@@ -1,4 +1,4 @@
-var calendarApp = angular.module('calendarApp', ['ngRoute', 'ngMessages', 'ngAnimate']);
+var calendarApp = angular.module('calendarApp', ['ngRoute', 'ngMessages', 'ngAnimate', 'angularSpinner']);
 /*calendarApp.config(function ($routeProvider) {
     $routeProvider
         .when('/',
@@ -76,6 +76,7 @@ $scope.findMonday = function(){
 
 
     $scope.getCalendarData = function(startDay, endDay){
+        angular.element('.spinner').show();
     generateHeader(startDay, endDay);
     $scope.dateData.startDate = $filter('date')(new Date(startDay * 1000), "yyyy-MM-dd");
     $scope.dateData.endDate= $filter('date')(new Date(endDay * 1000), "yyyy-MM-dd");
@@ -266,8 +267,7 @@ $scope.findMonday = function(){
                 val.date = $scope.newDates;
                 $scope.requestData.push(val);
             });
-
-            console.log($scope.requestData);
+            angular.element('.spinner').hide();
         })
         .error(function(data){
 
