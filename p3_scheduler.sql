@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2014 at 06:23 AM
+-- Generation Time: Nov 18, 2014 at 03:50 AM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.19
 
@@ -34,6 +34,16 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `Last_Name` varchar(40) NOT NULL,
   PRIMARY KEY (`Employee_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`Employee_ID`, `First_Name`, `Last_Name`) VALUES
+(12342, 'NoName', 'McAwesome'),
+(12343, 'Kris', 'Bullins'),
+(12344, 'Ryan', 'Dooley'),
+(12345, 'Duke', 'Ayers');
 
 -- --------------------------------------------------------
 
@@ -75,10 +85,44 @@ CREATE TABLE IF NOT EXISTS `schedule` (
   `Shift_ID` int(10) NOT NULL,
   `Employee_ID` int(10) NOT NULL,
   `Day` varchar(10) NOT NULL,
-  `Date` date NOT NULL DEFAULT '0000-00-00',
+  `Date` date NOT NULL,
   PRIMARY KEY (`Employee_ID`,`Date`),
   KEY `Shift_ID` (`Shift_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `schedule`
+--
+
+INSERT INTO `schedule` (`Shift_ID`, `Employee_ID`, `Day`, `Date`) VALUES
+(1, 12342, 'Friday', '2014-11-14'),
+(2, 12342, 'Sunday', '2014-11-16'),
+(3, 12342, 'Tuesday', '2014-11-18'),
+(3, 12342, 'Wednesday', '2014-11-19'),
+(3, 12342, 'Thursday', '2014-11-20'),
+(3, 12343, 'Monday', '2014-11-10'),
+(3, 12343, 'Wednesday', '2014-11-12'),
+(1, 12343, 'Thursday', '2014-11-13'),
+(2, 12343, 'Friday', '2014-11-21'),
+(3, 12343, 'Saturday', '2014-11-22'),
+(1, 12344, 'Saturday', '2014-11-08'),
+(2, 12344, 'Sunday', '2014-11-09'),
+(2, 12344, 'Monday', '2014-11-10'),
+(3, 12344, 'Tuesday', '2014-11-11'),
+(1, 12344, 'Thursday', '2014-11-13'),
+(1, 12344, 'Saturday', '2014-11-15'),
+(2, 12344, 'Sunday', '2014-11-16'),
+(3, 12344, 'Sunday', '2014-11-23'),
+(1, 12345, 'Tuesday', '2014-11-04'),
+(1, 12345, 'Wednesday', '2014-11-05'),
+(1, 12345, 'Thursday', '2014-11-06'),
+(3, 12345, 'Friday', '2014-11-07'),
+(2, 12345, 'Monday', '2014-11-10'),
+(2, 12345, 'Wednesday', '2014-11-12'),
+(3, 12345, 'Friday', '2014-11-14'),
+(2, 12345, 'Monday', '2014-11-17'),
+(1, 12345, 'Monday', '2014-11-24'),
+(1, 12345, 'Tuesday', '2014-11-25');
 
 -- --------------------------------------------------------
 
@@ -94,6 +138,15 @@ CREATE TABLE IF NOT EXISTS `shift` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `shift`
+--
+
+INSERT INTO `shift` (`Shift_ID`, `Start_Time`, `End_Time`) VALUES
+(1, '08:30', '15:30'),
+(2, '00:30', '12:30'),
+(3, '15:30', '22:00');
+
+--
 -- Constraints for dumped tables
 --
 
@@ -107,8 +160,8 @@ ALTER TABLE `req_time_off`
 -- Constraints for table `schedule`
 --
 ALTER TABLE `schedule`
-  ADD CONSTRAINT `schedule_ibfk_2` FOREIGN KEY (`Shift_ID`) REFERENCES `shift` (`Shift_ID`),
-  ADD CONSTRAINT `schedule_ibfk_1` FOREIGN KEY (`Employee_ID`) REFERENCES `employee` (`Employee_ID`);
+  ADD CONSTRAINT `schedule_ibfk_1` FOREIGN KEY (`Employee_ID`) REFERENCES `employee` (`Employee_ID`),
+  ADD CONSTRAINT `schedule_ibfk_2` FOREIGN KEY (`Shift_ID`) REFERENCES `shift` (`Shift_ID`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
