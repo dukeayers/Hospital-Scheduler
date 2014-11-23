@@ -24,14 +24,19 @@ include_once "php/navBar.php";
                 <tbody>
                     <tr ng-repeat="data in requestData">
                         <td>{{data.Name}}</td>
-                        <td class="popOut" data-toggle="modal" data-target="#shiftDetails" ng-click="getShiftDetails(data.Name,data.Start, data.End)" ng-repeat="shifts in data.Shift track by $index">
-                                {{shifts}}
+                        <td ng-repeat="shifts in data.Shift track by $index">
+                            {{shifts}}
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 </div>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#shiftDetails">
+    Shift Details
+</button>
 
 <!-- Modal For Shift Details-->
 <div class="modal fade" id="shiftDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -43,10 +48,6 @@ include_once "php/navBar.php";
             </div>
             <div class="modal-body">
                 this will pull from the data base to display information regarding a persons shift.
-                <tr ng-repeat="data in requestData">
-                    Working: {{data.Name}}
-                    Hours: {{shifts}}
-                </tr>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#swapShift">Swap Shift</button>
