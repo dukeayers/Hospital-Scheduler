@@ -9,457 +9,271 @@ var calendarApp = angular.module('calendarApp', ['ngRoute', 'ngMessages', 'ngAni
     )
 })*/
 //
-calendarApp.controller("controller",['$scope', '$http', function($scope, $http) {
+
+
+calendarApp.controller("controller",['$scope', '$http', '$filter', function($scope, $http, $filter) {
     $scope.requestData = [];
     $scope.showData = '';
     $scope.testData = [];
     $scope.formData = {};
     $scope.addShift = {};
-
-    //TODO: Uncomment the line below once you are ready to check the data coming back from the AJAX request.
-    // This works like a normal function call.
-    //$scope.getShifts();
-
-
-    //Makes the call to get the data from the DB
-    $scope.getCalendarData = function () {
-        $http.get('php/getInfo.php')
-            .success(function (data) {
-
-                angular.forEach(data, function (value, key) {
-                    console.log(data);
-                    //Split the shift/day JSON data into a list with the javascript split function
-                    value.Day = (value.Day).split(",");
-                    value.Shift = (value.Shift).split(",");
-                    $scope.testData[0] = '';
-                    $scope.testData[1] = '';
-                    $scope.testData[2] = '';
-                    $scope.testData[3] = '';
-                    $scope.testData[4] = '';
-                    $scope.testData[5] = '';
-                    $scope.testData[6] = '';
-
-                    //Check if we have shifts on any of those days
-                    //Really, we could do this multiple ways but I chose to check the Day and then change the shift.
-                    if (value.Day.length === 1) {
-                        if (value.Day[0] === "Monday") {
-                            $scope.testData[0] = value.Shift[0];
-                            $scope.testData[1] = '';
-                            $scope.testData[2] = '';
-                            $scope.testData[3] = '';
-                            $scope.testData[4] = '';
-                            $scope.testData[5] = '';
-                            $scope.testData[6] = '';
-
-                        }
-                        else if (value.Day[0] === "Tuesday") {
-                            $scope.testData[0] = '';
-                            $scope.testData[1] = value.Shift[0];
-                            $scope.testData[2] = '';
-                            $scope.testData[3] = '';
-                            $scope.testData[4] = '';
-                            $scope.testData[5] = '';
-                            $scope.testData[6] = '';
-                        }
-                        else if (value.Day[0] === "Wednesday") {
-                            $scope.testData[0] = '';
-                            $scope.testData[1] = '';
-                            $scope.testData[2] = value.Shift[0];
-                            $scope.testData[3] = '';
-                            $scope.testData[4] = '';
-                            $scope.testData[5] = '';
-                            $scope.testData[6] = '';
-                        }
-                        else if (value.Day[0] === "Thursday") {
-                            $scope.testData[0] = '';
-                            $scope.testData[1] = '';
-                            $scope.testData[2] = '';
-                            $scope.testData[3] = value.Shift[0];
-                            $scope.testData[4] = '';
-                            $scope.testData[5] = '';
-                            $scope.testData[6] = '';
-                        }
-                        else if (value.Day[0] === "Friday") {
-                            $scope.testData[0] = '';
-                            $scope.testData[1] = '';
-                            $scope.testData[2] = '';
-                            $scope.testData[3] = '';
-                            $scope.testData[4] = value.Shift[0];
-                            $scope.testData[5] = '';
-                            $scope.testData[6] = '';
-                        }
-                        else if (value.Day[0] === "Saturday") {
-                            $scope.testData[0] = '';
-                            $scope.testData[1] = '';
-                            $scope.testData[2] = '';
-                            $scope.testData[3] = '';
-                            $scope.testData[4] = '';
-                            $scope.testData[5] = value.Shift[0];
-                            $scope.testData[6] = '';
-                        }
-                        else if (value.Day[0] === "Sunday") {
-                            $scope.testData[0] = '';
-                            $scope.testData[1] = '';
-                            $scope.testData[2] = '';
-                            $scope.testData[3] = '';
-                            $scope.testData[4] = '';
-                            $scope.testData[5] = '';
-                            $scope.testData[6] = value.Shift[0];
-                        }
-                    }
-
-                    //Check with two values in the array
-                    else if (value.Day.length == 2) {
-                        if (value.Day[0] === "Monday") {
-                            $scope.testData[0] = value.Shift[0];
-                        }
-                        else if (value.Day[0] === "Tuesday") {
-                            $scope.testData[0] = '';
-                            $scope.testData[1] = value.Shift[0];
-                        }
-                        else if (value.Day[0] === "Wednesday") {
-                            $scope.testData[0] = '';
-                            $scope.testData[1] = '';
-                            $scope.testData[2] = value.Shift[0];
-                        }
-                        else if (value.Day[0] === "Thursday") {
-                            $scope.testData[0] = '';
-                            $scope.testData[1] = '';
-                            $scope.testData[2] = '';
-                            $scope.testData[3] = value.Shift[0];
-                        }
-                        else if (value.Day[0] === "Friday") {
-                            $scope.testData[0] = '';
-                            $scope.testData[1] = '';
-                            $scope.testData[2] = '';
-                            $scope.testData[3] = '';
-                            $scope.testData[4] = value.Shift[0];
-                        }
-                        else {
-                            $scope.testData[0] = '';
-                            $scope.testData[1] = '';
-                            $scope.testData[2] = '';
-                            $scope.testData[3] = '';
-                            $scope.testData[4] = '';
-                            $scope.testData[5] = value.Shift[0];
-                        }
-                        //Check the second value
-                        if (value.Day[1] === "Tuesday") {
-                            $scope.testData[1] = value.Shift[1];
-                        }
-                        else if (value.Day[1] === 'Wednesday') {
-                            if (value.Day[0] === "Monday") {
-                                $scope.testData[1] = '';
-                                $scope.testData[2] = value.Shift[1];
-                                $scope.testData[3] = '';
-                                $scope.testData[4] = '';
-                                $scope.testData[5] = '';
-                                $scope.testData[6] = '';
-                            }
-                            else {
-                                $scope.testData[2] = value.Shift[1];
-                                $scope.testData[3] = '';
-                                $scope.testData[4] = '';
-                                $scope.testData[5] = '';
-                                $scope.testData[6] = '';
-                            }
-                        }
-                        else if (value.Day[1] === 'Thursday') {
-                            if (value.Day[0] === "Monday") {
-                                $scope.testData[1] = '';
-                                $scope.testData[2] = '';
-                                $scope.testData[3] = value.Shift[1];
-                                $scope.testData[4] = '';
-                                $scope.testData[5] = '';
-                                $scope.testData[6] = '';
-                            }
-                            else {
-                                $scope.testData[3] = value.Shift[1];
-                                $scope.testData[4] = '';
-                                $scope.testData[5] = '';
-                                $scope.testData[6] = '';
-                            }
-                        }
-                        else if (value.Day[1] === 'Friday') {
-                            if (value.Day[0] === "Monday") {
-                                $scope.testData[1] = '';
-                                $scope.testData[2] = '';
-                                $scope.testData[3] = '';
-                                $scope.testData[4] = value.Shift[1];
-                                $scope.testData[5] = '';
-                                $scope.testData[6] = '';
-                            }
-                            else {
-                                $scope.testData[4] = value.Shift[1];
-                                $scope.testData[5] = '';
-                                $scope.testData[6] = '';
-                            }
-                        }
-                        else if (value.Day[1] === 'Saturday') {
-                            if (value.Day[0] === "Monday") {
-                                $scope.testData[1] = '';
-                                $scope.testData[2] = '';
-                                $scope.testData[3] = '';
-                                $scope.testData[4] = '';
-                                $scope.testData[5] = value.Shift[1];
-                                $scope.testData[6] = '';
-
-                            }
-                            else {
-                                $scope.testData[5] = value.Shift[1];
-                                $scope.testData[6] = '';
-
-                            }
-                        }
-                        else if (value.Day[1] === 'Sunday') {
-                            if (value.Day[0] === "Monday") {
-                                $scope.testData[1] = '';
-                                $scope.testData[2] = '';
-                                $scope.testData[3] = '';
-                                $scope.testData[4] = '';
-                                $scope.testData[5] = '';
-                                $scope.testData[6] = value.Shift[1];
-                            }
-                            else {
-                                $scope.testData[6] = value.Shift[1];
-                            }
-                        }
-
-                    }
-                    else if (value.Day.length == 3) {
-                        // console.log(value.Name);
-                        if (value.Day[0] === "Monday") {
-                            $scope.testData[0] = value.Shift[0];
-                        }
-                        else if (value.Day[0] === "Tuesday") {
-                            $scope.testData[1] = value.Shift[0];
-                        }
-                        else if (value.Day[0] === "Wednesday") {
-                            $scope.testData[2] = value.Shift[0];
-                        }
-                        else if (value.Day[0] === "Thursday") {
-                            $scope.testData[3] = value.Shift[0];
-                        }
-                        else {
-                            $scope.testData[4] = value.Shift[0];
-                        }
-                        //Check the second value
-                        if (value.Day[1] === "Tuesday") {
-                            $scope.testData[1] = value.Shift[1];
-                        }
-                        else if (value.Day[1] === 'Wednesday') {
-                            $scope.testData[2] = value.Shift[1];
-                        }
-                        else if (value.Day[1] === 'Thursday') {
-                            $scope.testData[3] = value.Shift[1];
-                        }
-                        else if (value.Day[1] === 'Friday') {
-                            console.log('Friday: ' + value.Name);
-                            console.log($scope.testData);
-                            $scope.testData[4] = value.Shift[1];
-                        }
-                        else {
-                            $scope.testData[5] = value.Shift[1];
-                        }
-                        //Check the third value
-                        if (value.Day[2] === "Wednesday") {
-                            $scope.testData[2] = value.Shift[2];
-                        }
-                        else if (value.Day[2] === 'Thursday') {
-                            $scope.testData[3] = value.Shift[2];
-                        }
-                        else if (value.Day[2] === 'Friday') {
-                            $scope.testData[4] = value.Shift[2];
-                        }
-                        else if (value.Day[2] === 'Saturday') {
-                            $scope.testData[5] = value.Shift[2];
-                        }
-                        else {
-
-                            $scope.testData[6] = value.Shift[2];
-
-                        }
-                    }
-                    else if (value.Day.length == 4) {
-                        if (value.Day[0] === "Monday") {
-                            $scope.testData[0] = value.Shift[0];
-                        }
-                        else if (value.Day[0] === "Tuesday") {
-                            $scope.testData[1] = value.Shift[0];
-                        }
-                        else if (value.Day[0] === "Wednesday") {
-                            $scope.testData[2] = value.Shift[0];
-                        }
-                        else {
-                            $scope.testData[3] = value.Shift[0];
-                        }
-                        //Check the second value
-                        if (value.Day[1] === "Tuesday") {
-                            $scope.testData[1] = value.Shift[1];
-                        }
-                        else if (value.Day[1] === 'Wednesday') {
-                            $scope.testData[2] = value.Shift[1];
-                        }
-                        else if (value.Day[1] === 'Thursday') {
-                            $scope.testData[3] = value.Shift[1];
-                        }
-                        else {
-                            $scope.testData[4] = value.Shift[1];
-                        }
-                        //Check the third value
-                        if (value.Day[2] === "Wednesday") {
-                            $scope.testData[2] = value.Shift[2];
-                        }
-                        else if (value.Day[2] === 'Thursday') {
-                            $scope.testData[3] = value.Shift[2];
-                        }
-                        else if (value.Day[2] === 'Friday') {
-                            $scope.testData[4] = value.Shift[2];
-                        }
-                        else {
-                            $scope.testData[5] = value.Shift[2];
-                        }
-                        //Check Fourth Value
-
-                        if (value.Day[3] === 'Thursday') {
-                            $scope.testData[3] = value.Shift[3];
-                        }
-                        else if (value.Day[3] === 'Friday') {
-                            $scope.testData[4] = value.Shift[3];
-                        }
-                        else if (value.Day[3] === 'Saturday') {
-                            $scope.testData[5] = value.Shift[3];
-                        }
-                        else {
-                            $scope.testData[6] = value.Shift[3];
-
-                        }
-                    }
-                    else if (value.Day.length == 5) {
-                        if (value.Day[0] === "Monday") {
-                            console.log('here');
-                            $scope.testData[0] = value.Shift[0];
-                        }
-                        else if (value.Day[0] === "Tuesday") {
-                            $scope.testData[1] = value.Shift[0];
-                        }
-                        else {
-                            $scope.testData[2] = value.Shift[0];
-                        }
-                        //Check the second value
-                        if (value.Day[1] === "Tuesday") {
-                            $scope.testData[1] = value.Shift[1];
-                        }
-                        else if (value.Day[1] === 'Wednesday') {
-                            $scope.testData[2] = value.Shift[1];
-                        }
-                        else {
-                            $scope.testData[3] = value.Shift[1];
-                        }
-                        //Check the third value
-                        if (value.Day[2] === "Wednesday") {
-                            $scope.testData[2] = value.Shift[2];
-                        }
-                        else if (value.Day[2] === 'Thursday') {
-                            $scope.testData[3] = value.Shift[2];
-                        }
-                        else {
-                            $scope.testData[4] = value.Shift[2];
-                        }
-                        //Check Fourth Value
-
-                        if (value.Day[3] === 'Thursday') {
-                            $scope.testData[3] = value.Shift[3];
-                        }
-                        else if (value.Day[3] === 'Friday') {
-                            $scope.testData[4] = value.Shift[3];
-                        }
-                        else {
-                            $scope.testData[5] = value.Shift[3];
-                        }
-                        //Check Fifth Value
-                        if (value.Day[4] === 'Friday') {
-                            $scope.testData[4] = value.Shift[4];
-                        }
-                        else if (value.Day[4] === 'Saturday') {
-                            $scope.testData[5] = value.Shift[4];
-                        }
-                        else {
-                            $scope.testData[6] = value.Shift[4];
-                        }
-                    }
-                    else if (value.Day.length == 6) {
-                        if (value.Day[0] === "Monday") {
-                            console.log('here');
-                            $scope.testData[0] = value.Shift[0];
-                        }
-                        else {
-                            $scope.testData[1] = value.Shift[0];
-                        }
-                        //Check the second value
-                        if (value.Day[1] === "Tuesday") {
-                            $scope.testData[1] = value.Shift[1];
-                        }
-                        else {
-                            $scope.testData[2] = value.Shift[1];
-                        }
-                        //Check the third value
-                        if (value.Day[2] === "Wednesday") {
-                            $scope.testData[2] = value.Shift[2];
-                        }
-                        else {
-                            $scope.testData[3] = value.Shift[2];
-                        }
-                        //Check Fourth Value
-
-                        if (value.Day[3] === 'Thursday') {
-                            $scope.testData[3] = value.Shift[3];
-                        }
-                        else {
-                            $scope.testData[4] = value.Shift[3];
-                        }
-                        //Check Fifth Value
-                        if (value.Day[4] === 'Friday') {
-                            $scope.testData[4] = value.Shift[4];
-                        }
-                        else {
-                            $scope.testData[5] = value.Shift[4];
-                        }
-                        //Check Sixth Value
-                        if (value.Day[5] === 'Saturday') {
-                            $scope.testData[5] = value.Shift[4];
-                        }
-                        else {
-                            $scope.testData[6] = value.Shift[4];
-                        }
-                    }
-                    else {
-                        $scope.testData[0] = value.Shift[0];
-                        $scope.testData[1] = value.Shift[1];
-                        $scope.testData[2] = value.Shift[2];
-                        $scope.testData[3] = value.Shift[3];
-                        $scope.testData[4] = value.Shift[4];
-                        $scope.testData[5] = value.Shift[5];
-                        $scope.testData[6] = value.Shift[6];
-                    }
-                    //Adjusts the Shift array to our new data that we just made.
-                    value.Shift[0] = $scope.testData[0];
-                    value.Shift[1] = $scope.testData[1];
-                    value.Shift[2] = $scope.testData[2];
-                    value.Shift[3] = $scope.testData[3];
-                    value.Shift[4] = $scope.testData[4];
-                    value.Shift[5] = $scope.testData[5];
-                    value.Shift[6] = $scope.testData[6];
+    $scope.tableHeader = [];
+    $scope.dateData = {};
+    $scope.oneDay = 24*60*60*1000;
 
 
-                    //Send the data to the front side.
-                    $scope.requestData.push(value);
+function generateHeader (startDay,endDay){
+    $scope.tableHeader = [];
+    $scope.tableHeader.push(new Date(startDay * 1000));
+    startDay = startDay * 1000;
+    var oneDay = 24*60*60*1000;
+    while($scope.tableHeader.length < 7){
+        startDay += oneDay;
+        $scope.tableHeader.push(new Date(startDay));
+    }
+}
 
-                });
-            })
-            .error(function (data) {
-            });
+$scope.findMonday = function(){
+    $scope.todayDate = $filter('date')(new Date(), "EEE");
+    console.log($scope.todayDate);
+    var oneDay = 24*60*60*1000;
+    var sixDays = oneDay * 6;
+    if($scope.todayDate != 'Mon'){
+        $scope.testDate = new Date();
+        $scope.testDate = Date.parse($scope.testDate);
+        while($scope.todayDate != 'Mon'){
+            $scope.testDate -= oneDay;
+            $scope.todayDate = $filter('date')(new Date($scope.testDate), "EEE");
+        }
+
+        $scope.sevenDay = $scope.testDate + sixDays;
+        $scope.getCalendarData($scope.testDate/1000, $scope.sevenDay/1000);
+    }
+    else{
+        $scope.testDate = new Date();
+        $scope.testDate = Date.parse($scope.testDate);
+        $scope.sevenDay = $scope.testDate + sixDays;
+        $scope.getCalendarData($scope.testDate/1000, $scope.sevenDay/1000);
+        console.log($scope.testDate);
+    }
+};
+
+    $scope.previousWeek = function(){
+        var sevenDays = 24*60*60*1000 * 7;
+        $scope.testDate = $scope.testDate - sevenDays;
+        $scope.sevenDay =  $scope.sevenDay - sevenDays;
+        $scope.getCalendarData($scope.testDate/1000, $scope.sevenDay/1000);
     };
+    $scope.nextWeek = function(){
+        var sevenDays = 24*60*60*1000 * 7;
+        $scope.testDate = $scope.testDate + sevenDays;
+        $scope.sevenDay =  $scope.sevenDay + sevenDays;
+        $scope.getCalendarData($scope.testDate/1000, $scope.sevenDay/1000);
+    };
+
+
+
+
+
+    $scope.getCalendarData = function(startDay, endDay){
+    generateHeader(startDay, endDay);
+    $scope.dateData.startDate = $filter('date')(new Date(startDay * 1000), "yyyy-MM-dd");
+    $scope.dateData.endDate= $filter('date')(new Date(endDay * 1000), "yyyy-MM-dd");
+    $http({
+        method: "POST",
+        url: "php/getInfo.php",
+        data: $.param($scope.dateData),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    })
+        .success(function(data){
+            $scope.requestData = [];
+            angular.forEach(data, function(val){
+                //Create new arrays to hold the data in.
+                $scope.newDates = [];
+                $scope.newShifts = [];
+                //Split the data from the string they are in.
+                val.date = (val.date).split(",");
+                val.shift = (val.shift).split(",");
+                //Set up variables to check the start day and end day
+                //Also set a variable to account for one entire day.
+
+
+                //console.log(startDay);
+                var endDay1 = endDay;
+                for(var i = 0; i < val.date.length; i ++){
+                    var startDay1 = startDay;
+                    var difference = 0;
+                    var oneDay = 24*60*60;
+                    //console.log(val.date[i]);
+                    //var newDate = new Date(val.date[i]);
+                    //newDate.setMinutes(newDate.getMinutes() + newDate.getTimezoneOffset());
+                    //console.log(newDate);
+                    var setDate = new Date(val.date[i]);
+                    setDate.setMinutes(setDate.getMinutes() + setDate.getTimezoneOffset());
+                    var currentDate = setDate.getTime()/1000;
+                    var setDate1 = new Date(val.date[i + 1]);
+                    setDate1.setMinutes(setDate1.getMinutes() + setDate1.getTimezoneOffset());
+                    var nextShift = setDate1.getTime()/1000;
+
+                    //console.log("Current Date: " + setDate);
+                    //console.log("Start Date: " + startDay1);
+
+                    if(val.date.length == 1){
+                        var startDiff = Math.ceil((currentDate - startDay1)/oneDay);
+                       // console.log("Start Difference: " + startDiff);
+                        if(startDiff > 1){
+                            var newDate = new Date(startDay1 * 1000);
+                            $scope.newDates.push(newDate);
+                            $scope.newShifts.push('');
+                            while(startDiff > 1){
+                                startDay1 += oneDay;
+                                newDate = new Date(startDay1 * 1000);
+                                $scope.newDates.push(newDate);
+                                $scope.newShifts.push('');
+                                startDiff -= 1;
+                            }
+                            newDate = new Date(currentDate * 1000);
+                            $scope.newDates.push(newDate);
+                            $scope.newShifts.push(val.shift[i]);
+                        }
+                        else if(startDiff == 1){
+                            $scope.newDates.push(new Date(startDay1 * 1000));
+                            $scope.newShifts.push('');
+                            $scope.newDates.push(new Date(currentDate * 1000));
+                            $scope.newShifts.push(val.shift[i]);
+                        }
+                        else{
+                            $scope.newDates.push(new Date(currentDate * 1000));
+                            $scope.newShifts.push(val.shift[i]);
+                        }
+
+                        var endDiff = Math.floor((endDay1 - currentDate)/oneDay);
+                       // console.log(endDiff);
+                        if(endDiff > 1){
+                           // console.log(val.first_name);
+                            while(endDiff > 1){
+                                currentDate += oneDay;
+                                $scope.newDates.push(new Date(currentDate * 1000));
+                                $scope.newShifts.push('');
+                                endDiff --;
+                            }
+                            $scope.newDates.push(new Date(endDay1 * 1000));
+                            $scope.newShifts.push('');
+                        }
+                        else if(endDiff == 1){
+                            $scope.newDates.push(new Date(endDay1 * 1000));
+                            $scope.newShifts.push('');
+                        }
+                        else{
+                            break;
+                        }
+
+                    }
+                    else{
+                        if(i == 0){
+                            //console.log(new Date(currentDate * 1000));
+                            startDiff = Math.ceil((currentDate - startDay1) / oneDay);
+                            //console.log(val.first_name + ' ' + startDiff);
+                           // console.log(new Date(startDay1 * 1000));
+                            if(startDiff > 1){
+                                newDate = new Date(startDay1 * 1000);
+                                $scope.newDates.push(newDate);
+                                $scope.newShifts.push('');
+                                console.log(newDate);
+                                while( startDiff > 1){
+                                    startDay1 += oneDay;
+                                    newDate = new Date(startDay1 * 1000);
+                                    $scope.newDates.push(newDate);
+                                    $scope.newShifts.push('');
+                                    startDiff -= 1;
+                                }
+                                $scope.newDates.push(new Date(currentDate * 1000));
+                                $scope.newShifts.push(val.shift[i]);
+                            }
+                            else if(startDiff == 1){
+                                newDate = new Date(startDay1 * 1000);
+                                $scope.newDates.push(newDate);
+                                $scope.newShifts.push('');
+                                $scope.newDates.push(new Date(currentDate * 1000));
+                                $scope.newShifts.push(val.shift[i]);
+
+                            }
+                            else{
+                                newDate = new Date(currentDate * 1000);
+                                $scope.newDates.push(newDate);
+                                $scope.newShifts.push(val.shift[i]);
+                            }
+                           var diff = Math.ceil((nextShift - currentDate)/oneDay);
+                            if(diff > 1){
+                                while(diff > 1){
+                                    currentDate += oneDay;
+                                    $scope.newDates.push(new Date(currentDate * 1000));
+                                    $scope.newShifts.push('');
+                                    diff --;
+                                }
+                                $scope.newDates.push(new Date(nextShift * 1000));
+                                $scope.newShifts.push(val.shift[i + 1]);
+                            }
+                            else{
+                                newDate = new Date(nextShift * 1000);
+                                $scope.newDates.push(newDate);
+                                $scope.newShifts.push(val.shift[i + 1]);
+                            }
+                        }
+                        else if(i != val.date.length - 1){
+                            var nextDiff = ((nextShift - currentDate)/oneDay);
+                            if(nextDiff > 1){
+                                while(nextDiff > 1){
+                                    currentDate += oneDay;
+                                    $scope.newDates.push(new Date(currentDate * 1000));
+                                    $scope.newShifts.push('');
+                                    nextDiff --;
+                                }
+                                $scope.newDates.push(new Date(nextShift * 1000));
+                                $scope.newShifts.push(val.shift[i + 1]);
+
+                            }
+                            else{
+                                $scope.newDates.push(new Date(nextShift * 1000));
+                                $scope.newShifts.push(val.shift[i + 1]);
+
+                            }
+                        }
+                        else{
+                            endDiff = Math.floor((endDay1 - currentDate)/oneDay);
+                            if(endDiff > 1){
+                                while(endDiff > 1){
+                                    currentDate += oneDay;
+                                    $scope.newShifts.push('');
+                                    $scope.newDates.push(new Date(currentDate * 1000));
+                                    endDiff --;
+                                }
+                                $scope.newShifts.push('');
+                                $scope.newDates.push(new Date(endDay1 * 1000));
+                            }
+                            else if(endDiff == 1){
+                                $scope.newShifts.push('');
+
+                                $scope.newDates.push(new Date(endDay1 * 1000));
+                            }
+                            else{
+                                break;
+                            }
+                        }
+                    }
+                }
+                val.shift = $scope.newShifts;
+                val.date = $scope.newDates;
+                $scope.requestData.push(val);
+            });
+
+            console.log($scope.requestData);
+        })
+        .error(function(data){
+
+        })
+
+};
 
     $scope.shifts = {};
     $scope.getShifts = function () {
@@ -470,8 +284,8 @@ calendarApp.controller("controller",['$scope', '$http', function($scope, $http) 
                 $scope.shifts = (data);
 
             })
-    .error(function (data) {
-        });
+            .error(function (data) {
+            });
     };
 
     $scope.updateShifts = function() {
@@ -514,11 +328,12 @@ calendarApp.controller("controller",['$scope', '$http', function($scope, $http) 
     }
 
 
-/*
-* Below is the demo data for the demo.php page. You can see that we have done this in two ways.
-* One way is using a JSON object and the other way is using just a plain, normal array.
-* As you can see, angular will handle the data almost the same on the front end.
-* */
+
+    /*
+    * Below is the demo data for the demo.php page. You can see that we have done this in two ways.
+    * One way is using a JSON object and the other way is using just a plain, normal array.
+    * As you can see, angular will handle the data almost the same on the front end.
+    * */
 
     $scope.exampleData = {};
     $scope.exampleData = [
