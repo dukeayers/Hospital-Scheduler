@@ -1,11 +1,10 @@
 <?php
 include 'SessionLogin.php';
 
-/*TODO: Input the MySQL query to pull all of the shift data. The code below should take care of the rest for you. */
 $sql = ("SELECT DISTINCT
 SHIFT_ID as ID,
-SHIFT_START as Start,
-SHIFT_END as End
+Start_time as Start,
+End_time as End
 FROM shift;");
 
 $result = $mysqli->query($sql) or die($mysqli->error);

@@ -58,6 +58,39 @@ include_once "php/navBar.php";
 <!--    </div>-->
 </div>
 
+<div class="col-xs-10 col-xs-push-2" style="background:white; border-radius: 5px; margin-left:25px; width:80.33%;">
+    <div class="row text-center">
+        <h3 style="border-bottom:1px solid lightgray">Weekly Calendar</h3>
+    </div>
+
+    <div class="table-responsive" style="margin-top:10px;">
+
+        <table class="table text-center">
+            <div class="spinner">
+                <span us-spinner="{radius:30, width:8, length: 16}"></span>
+            </div>
+            <thead class="calendarHead text-center" >
+            <td>Name</td>
+            <td ng-repeat="calendar in tableHeader">{{calendar | date: 'EEE'}}</br>{{calendar | date:'MM-dd-yyyy'}}</td>
+            </thead>
+            <tbody>
+            <tr ng-repeat="data in requestData">
+                <td>{{data.first_name}}</td>
+                <td ng-repeat="shifts in data.shift track by $index">
+                    {{shifts}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <nav>
+        <ul class="pager">
+            <li><a href="#" ng-click="previousWeek()">Previous</a></li>
+            <li><a href="#" ng-click="nextWeek()">Next</a></li>
+        </ul>
+    </nav>
+</div>
+
 <?php
 include_once "php/footer.php";
 ?>

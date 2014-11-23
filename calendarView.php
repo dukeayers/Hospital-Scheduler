@@ -1,7 +1,16 @@
 <?php
+/* Hiding Login checking till it is need.
+ * session_start(); //Begin session, used for login verification
+ * //Checks for logged in status, redirects to login page if the user is not logged in.
+ * if (!(isset($_SESSION["logged_in"]))) {
+ * header('Location: login.php');
+ * exit();
+ * }
+ */?>
+<?php
 include_once "php/headSection.php";
 ?>
-<body  ng-app="calendarApp" ng-controller="controller" ng-init="getCalendarData()">
+<body  ng-app="calendarApp" ng-controller="controller" ng-init="findMonday()">
 <?php
 include_once "php/navBar.php";
 ?>
@@ -9,22 +18,23 @@ include_once "php/navBar.php";
     <div class="row text-center">
         <h3 style="border-bottom:1px solid lightgray">Calendar View</h3>
     </div>
+    <div class="row text-center" style="margin-bottom:5px;">
+        <div class="btn-group" role="group" aria-label="...">
+            <button class="btn-primary btn" ng-click="previousWeek()">Previous Week</button>
+            <button class="btn-primary btn" ng-click="nextWeek()">Next Week</button>
+        </div>
+    </div>
+
         <div class="table-responsive">
-            <table class="table">
-                <thead class="calendarHead">
+            <table class="table text-center">
+                <thead class="calendarHead text-center" >
                     <td>Name</td>
-                    <td>Monday</td>
-                    <td>Tuesday</td>
-                    <td>Wednesday</td>
-                    <td>Thursday</td>
-                    <td>Friday</td>
-                    <td>Saturday</td>
-                    <td>Sunday</td>
+                    <td ng-repeat="calendar in tableHeader">{{calendar | date: 'EEE'}}</br>{{calendar | date:'MM-dd-yyyy'}}</td>
                 </thead>
                 <tbody>
                     <tr ng-repeat="data in requestData">
-                        <td>{{data.Name}}</td>
-                        <td ng-repeat="shifts in data.Shift track by $index">
+                        <td>{{data.first_name}}</td>
+                        <td ng-repeat="shifts in data.shift track by $index">
                             {{shifts}}
                         </td>
                     </tr>
@@ -33,102 +43,103 @@ include_once "php/navBar.php";
         </div>
 </div>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#shiftDetails">
-    Shift Details
-</button>
+<!-- Button trigger modal-->
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#shiftDetails">-->
+<!--    Shift Details-->
+<!--</button>-->
 
 <!-- Modal For Shift Details-->
-<div class="modal fade" id="shiftDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Shift Details</h4>
-            </div>
-            <div class="modal-body">
-                this will pull from the data base to display information regarding a persons shift.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#swapShift">Swap Shift</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal For Swapping Shifts -->
-<div class="modal fade" id="swapShift" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Swap Shift</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="shiftDay">Date to swap:</label>
-                    <input type="text" class="form-control" ng-model="" id="shiftDay" placeholder="Date to swap shift">
-                </div>
-                <div class="form-group">
-                    <label for="person">Person to swap:</label>
-                    <input type="text" class="form-control" ng-model="" id="person" placeholder="Person to swap shift">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Submit</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#timeOff">
-    Request Time Off
-</button>
+<!--<div class="modal fade" id="shiftDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+<!--                <h4 class="modal-title" id="myModalLabel">Shift Details</h4>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                this will pull from the data base to display information regarding a persons shift.-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#swapShift">Swap Shift</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!---->
+<!--<!-- Modal For Swapping Shifts -->-->
+<!--<div class="modal fade" id="swapShift" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+<!--                <h4 class="modal-title" id="myModalLabel">Swap Shift</h4>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <div class="form-group">-->
+<!--                    <label for="shiftDay">Date to swap:</label>-->
+<!--                    <input type="text" class="form-control" ng-model="" id="shiftDay" placeholder="Date to swap shift">-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="person">Person to swap:</label>-->
+<!--                    <input type="text" class="form-control" ng-model="" id="person" placeholder="Person to swap shift">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+<!--                <button type="button" class="btn btn-primary">Submit</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!---->
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#timeOff">-->
+<!--    Request Time Off-->
+<!--</button>-->
 
 <!-- Modal For Requesting Time Off-->
-<div class="modal fade" id="timeOff" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Shift Details</h4>
-            </div>
-            <div class="modal-body">
-                From:
-                <select>
-                    <option value="Monday">Monday</option>
-                    <option value="Monday">Tuesday</option>
-                    <option value="Monday">Wednesday</option>
-                    <option value="Monday">Thursday</option>
-                    <option value="Monday">Friday</option>
-                    <option value="Monday">Saturday</option>
-                    <option value="Monday">Sunday</option>
-                </select>
-                To:
-                <select>
-                    <option value="Monday">Monday</option>
-                    <option value="Monday">Tuesday</option>
-                    <option value="Monday">Wednesday</option>
-                    <option value="Monday">Thursday</option>
-                    <option value="Monday">Friday</option>
-                    <option value="Monday">Saturday</option>
-                    <option value="Monday">Sunday</option>
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#swapShift">Submit</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!--<div class="modal fade" id="timeOff" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+<!--                <h4 class="modal-title" id="myModalLabel">Shift Details</h4>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                From:-->
+<!--                <select>-->
+<!--                    <option value="Monday">Monday</option>-->
+<!--                    <option value="Monday">Tuesday</option>-->
+<!--                    <option value="Monday">Wednesday</option>-->
+<!--                    <option value="Monday">Thursday</option>-->
+<!--                    <option value="Monday">Friday</option>-->
+<!--                    <option value="Monday">Saturday</option>-->
+<!--                    <option value="Monday">Sunday</option>-->
+<!--                </select>-->
+<!--                To:-->
+<!--                <select>-->
+<!--                    <option value="Monday">Monday</option>-->
+<!--                    <option value="Monday">Tuesday</option>-->
+<!--                    <option value="Monday">Wednesday</option>-->
+<!--                    <option value="Monday">Thursday</option>-->
+<!--                    <option value="Monday">Friday</option>-->
+<!--                    <option value="Monday">Saturday</option>-->
+<!--                    <option value="Monday">Sunday</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#swapShift">Submit</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
-<!--The below calls two partial templates-->
-<div ng-include="'js/Template/dataTable.tpl.html'"></div>
-<div ng-include="'js/Template/calendarData.tpl.html'"></div>
-<!-- This will call the modal template -->
-<div ng-view></div>
+<!--<!--The below calls two partial templates-->
+<!--<div ng-include="'js/Template/dataTable.tpl.html'"></div>-->
+<!--<div ng-include="'js/Template/calendarData.tpl.html'"></div>-->
+<!--<!-- This will call the modal template -->
+<!--<div ng-view></div>-->
 
-
+<?php
+include_once "php/footer.php";
+?>
 </body>
-</html>

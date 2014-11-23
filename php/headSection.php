@@ -13,11 +13,13 @@
     <script src="/Hospital-Scheduler/js/jquery.min.js"></script>
     <script src="/Hospital-Scheduler/js/bootstrap.min.js"></script>
     <!--Loading the angular from the website, I am having problems with getting it to load-->
-    <script src="//code.angularjs.org/1.3.1/angular.js"></script>
+    <script src="https://code.angularjs.org/1.3.1/angular.js"></script>
     <script src="/Hospital-Scheduler/js/Controllers/controller.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular-messages.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular-animate.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-spinner/0.5.1/angular-spinner.min.js"></script>
+    <script src="http://fgnass.github.io/spin.js/spin.min.js"></script>
 
     <script src="/Hospital-Scheduler/js/master.js"></script>
 </head>

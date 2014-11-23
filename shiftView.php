@@ -14,7 +14,7 @@ include_once "php/navBar.php";
     <div class="row">
         <div class="col-sm-9">
             <div class="table-responsive text-center">
-                <table class="table table-striped">
+                <table class="table">
                     <thead>
                     <td>Shift ID</td>
                     <td>Shift Start Time</td>
@@ -129,3 +129,6 @@ include_once "php/navBar.php";
         </div>
     </div>
 </div>
+<?php
+include_once "php/footer.php";
+?>
