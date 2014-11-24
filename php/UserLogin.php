@@ -34,3 +34,4 @@ if (isset($_POST['user']) && isset($_POST['pass']))
     header('Refresh:5; ../login.php');
     exit;
 }
+?>
