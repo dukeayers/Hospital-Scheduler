@@ -37,4 +37,12 @@ tr {
 }
 .container .text-muted {
     margin: 20px 0;
+
 }
+.tablebordertop {
+    border-style: solid;
+    border-width: thin;
+    border-color: #d3d3d3;
+    margin-top: 10px ;
+}
+

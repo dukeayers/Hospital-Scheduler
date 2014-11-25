@@ -16,6 +16,7 @@ calendarApp.controller("controller",['$scope', '$http', '$filter', function($sco
     $scope.showData = '';
     $scope.testData = [];
     $scope.formData = {};
+    $scope.addEmployee = {};
     $scope.addShift = {};
     $scope.tableHeader = [];
     $scope.dateData = {};
@@ -328,6 +329,60 @@ $scope.findMonday = function(){
     }
 
 
+    /*
+     *This is the Data for the Administrator Tools
+     */
+    $scope.employees = {};
+    $scope.getEmployees = function () {
+        $http.get('php/getStaffData.php')
+            .success(function (data) {
+                //Below will show the data being sent back from the php file.
+                console.log(data);
+                $scope.employee = (data);
+
+            })
+            .error(function (data) {
+            });
+    };
+
+    $scope.updateEmployee = function() {
+        console.log('here');
+        $http({
+            method: "POST",
+            url: "php/updateEmployee.php",
+            data: $.param($scope.formData),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function (data) {
+            //Below will show the data being sent back from the php file.
+            $scope.successMessage = "Update Successful";
+            location.reload();
+
+        })
+            .error(function (data) {
+            });
+    }
+
+    $scope.addNewEmployee = function() {
+        $http({
+            method: "POST",
+            url: "php/addNewEmployee.php",
+            data: $.param($scope.addEmployee),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function (data) {
+            console.log(data);
+            //Below will show the data being sent back from the php file.
+            $scope.successMessage = "Update Successful";
+            location.reload();
+        })
+            .error(function (data) {
+            });
+    }
+
+    $scope.getEmployeeDetails = function(ID, fname, lname){
+        $scope.formData.EmployeeID = ID;
+        $scope.formData.EmployeeFirstName = fname;
+        $scope.formData.shiftEnd = lname;
+    }
 
     /*
     * Below is the demo data for the demo.php page. You can see that we have done this in two ways.

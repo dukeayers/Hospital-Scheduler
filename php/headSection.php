@@ -7,7 +7,7 @@
 <html>
 <head lang="en" >
     <meta charset="UTF-8">
-    <title></title>
+    <title><?= isset($title)?$title:"" ?></title>
     <link href="/Hospital-Scheduler/css/master.css" type="text/css" rel="stylesheet"/>
     <link href="/Hospital-Scheduler/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
     <script src="/Hospital-Scheduler/js/jquery.min.js"></script>

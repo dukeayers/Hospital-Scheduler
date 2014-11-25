@@ -49,6 +49,7 @@ include_once "php/navBar.php";
         <li class="sidebar-nav"><a style="color:white; font-weight:800; font-size:18px;" href="calendarView.php">My Calendar</a></li>
         <li class="sidebar-nav"><a style="color:white; font-weight:800; font-size:18px;" href="shiftView.php">Shifts</a></li>
         <li class="sidebar-nav"><a style="color:white; font-weight:800; font-size:18px;" href="">My Information</a></li>
+        <li class="sidebar-nav"><a style="color:white; font-weight:800; font-size:18px;" href="adminView.php">Administrator Tools</a></li>
     </ul>
 <!--    <div class="btn-group-vertical col-xs-12" role="group">-->
 <!--        <button class="btn btn-primary " style="margin-top:21px;">Dashboard</button>-->
