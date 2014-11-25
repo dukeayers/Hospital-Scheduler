@@ -29,7 +29,7 @@ USE `p3_scheduler`;
 --
 
 CREATE TABLE IF NOT EXISTS `employee` (
-  `Employee_ID` int(10) NOT NULL,
+  `Employee_ID` int(10) NOT NULL AUTO_INCREMENT,
   `First_Name` varchar(40) NOT NULL,
   `Last_Name` varchar(40) NOT NULL,
   PRIMARY KEY (`Employee_ID`)
