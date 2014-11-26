@@ -14,7 +14,7 @@
                     <a href="/Hospital-Scheduler/adminView.php"><i class="glyphicon glyphicon-list-alt"> Employee Editor</i></a>
                 </li>
                 <li>
-                    <a href="/Hospital-Scheduler/shiftView.php"><i class="glyphicon glyphicon-time"> Schedule Editor</i></a>
+                    <a href="/Hospital-Scheduler/shiftView.php"><i class="glyphicon glyphicon-time"> Shift Editor</i></a>
                 </li>
                 <!--
                 <li>

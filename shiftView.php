@@ -1,48 +1,46 @@
 <?php
+$title = 'Shift Editor';
 include_once "php/headSection.php";
-?>
-<body  ng-app="calendarApp" ng-controller="controller" ng-init="getShifts()">
-<?php
 include_once "php/navBar.php";
 include_once "php/sideBar.php";
 ?>
 
-<div class="container">
-    <div class="row text-center" style="margin-bottom:30px;">
-        <h2 style="border-bottom:1px solid lightgray">Current Shift Blocks</h2>
+    <body  ng-app="calendarApp" ng-controller="controller" ng-init="getShifts()">
+
+    <div class="container">
+        <div class="row text-center"">
+        <h3 style="border-bottom:1px solid lightgray">Administration View - Shift Editor</h3>
+    </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-9">
-            <div class="table-responsive text-center">
-                <table class="table">
-                    <thead>
-                    <td>Shift ID</td>
-                    <td>Shift Start Time</td>
-                    <td>Shift End Time</td>
-                    <td></td>
-                    </thead>
-                    <tbody>
-                    <tr class="popOut" ng-repeat="data in shifts"  data-toggle="modal" data-target="#myModal" ng-click="getShiftDetails(data.ID,data.Start, data.End)"  >
-                        <td>{{data.ID}}</td>
-                        <td>{{data.Start}}</td>
-                        <td>{{data.End}}</td>
-                        <td><span class="glyphicon glyphicon-info-sign"></span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="container">
+        <div class="btn-group btn-group-lg" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newShift"">Add New Shift</button>
+            <button type="button" class="btn btn-danger disabled"">Delete Shift</button>
         </div>
-        <div class="col-sm-3">
-            <button class="btn btn-transparent" data-toggle="modal" data-target="#newShift" style="width:100%; font-weight:800;">Add New Shift</button>
-            <button class="btn btn-transparent" style="width:100%; font-weight:800; margin-top:10px;">Delete Shift</button>
+
+
+        <div class="table-responsive text-center">
+            <table class="table table-striped table-hover tablebordertop">
+                <thead>
+                <td>Shift ID</td>
+                <td>Shift Start Time</td>
+                <td>Shift End Time</td>
+                <td></td>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in shifts"  data-toggle="modal" data-target="#myModal" ng-click="getShiftDetails(data.ID,data.Start, data.End)"  >
+                    <td>{{data.ID}}</td>
+                    <td>{{data.Start}}</td>
+                    <td>{{data.End}}</td>
+                    <td><span class="glyphicon glyphicon-info-sign"></span></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-    </div>
-
-    <div class="row">
 
     </div>
-
+    </body>
     <!--Modal for Adding a shift -->
     <div class="modal fade" id="newShift" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -97,7 +95,7 @@ include_once "php/sideBar.php";
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-success text-center" ng-show="successMessage" role="alert">
-                       <h3>{{successMessage}}</h3>
+                        <h3>{{successMessage}}</h3>
                     </div>
                     <form ng-submit="updateShifts()" role="form" name="formUpdateShift">
                         <div class="form-group hide">
@@ -129,7 +127,7 @@ include_once "php/sideBar.php";
             </div>
         </div>
     </div>
-</div>
+    </div>
 <?php
 include_once "php/footer.php";
 ?>
