@@ -10,7 +10,6 @@ var calendarApp = angular.module('calendarApp', ['ngRoute', 'ngMessages', 'ngAni
 })*/
 //
 
-
 calendarApp.controller("controller",['$scope', '$http', '$filter', function($scope, $http, $filter) {
     $scope.requestData = [];
     $scope.showData = '';
@@ -328,10 +327,20 @@ $scope.findMonday = function(){
         $scope.formData.shiftEnd = endTime;
     }
 
-
     /*
      *This is the Data for the Administrator Tools
      */
+
+    /* Administrator Update */
+    $scope.getEmployeeDetails = function(ID, uid, fname, lname, usertype){
+        $scope.formData.employeeID = ID;
+        $scope.formData.employeeUID = uid;
+        $scope.formData.employeeFirstName = fname;
+        $scope.formData.employeeLastName = lname;
+        $scope.formData.employeeType = usertype;
+    }
+
+
     $scope.employees = {};
     $scope.getEmployees = function () {
         $http.get('php/getStaffData.php')

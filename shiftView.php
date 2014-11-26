@@ -27,14 +27,12 @@ include_once "php/footer.php";
                 <!--<td>Shift ID</td>-->
                 <td>Shift Start Time</td>
                 <td>Shift End Time</td>
-                <td></td>
                 </thead>
                 <tbody>
                 <tr ng-repeat="data in shifts"  data-toggle="modal" data-target="#myModal" ng-click="getShiftDetails(data.ID,data.Start, data.End)"  >
                     <!--<td>{{data.ID}}</td>-->
                     <td>{{data.Start}}</td>
                     <td>{{data.End}}</td>
-                    <td><span class="glyphicon glyphicon-info-sign"></span></td>
                 </tr>
                 </tbody>
             </table>

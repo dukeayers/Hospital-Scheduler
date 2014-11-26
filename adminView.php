@@ -36,12 +36,12 @@ include_once "php/footer.php";
         </thead>
 
         <tbody>
-        <tr class="" ng-repeat="data in employee" ng-click="getStaffData(data.ID, data.uid, data.fname, data.lname, data.usertype)"  >
+        <tr class="" ng-repeat="data in employee" data-toggle="modal" data-target="#updateEmployee" ng-click="getEmployeeDetails(data.ID, data.uid, data.fname, data.lname, data.usertype)">
             <!--<td>{{data.ID}}</td> -->
             <td>{{data.uid}}</td>
             <td>{{data.fname}}</td>
             <td>{{data.lname}}</td>
-            <td>{{data.usertype}}<?php ?></td>
+            <td>{{data.usertype}}</td>
         </tr>
         </tbody>
     </table>
@@ -55,11 +55,12 @@ include_once "php/footer.php";
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title" id="myModalLabel">Add New Employee</h4>
             </div>
-            <div class="modal-body">
-                <div class="alert alert-success text-center" ng-show="successMessage" role="alert">
-                    <h3>{{successMessage}}</h3>
-                </div>
-                <form ng-submit="addNewEmployee()" name="formAddEmployee" role="form">
+            <form ng-submit="addNewEmployee()" name="formAddEmployee" role="form">
+                <div class="modal-body">
+                    <div class="alert alert-success text-center" ng-show="successMessage" role="alert">
+                        <h3>{{successMessage}}</h3>
+                    </div>
+
                     <!--UserID Input -->
                     <div class="form-group">
                         <label for="employeeUID">User ID (UID):</label>
@@ -89,18 +90,79 @@ include_once "php/footer.php";
                     </div>
                     <!--Employee Role -->
                     <div class="form-group">
-                        <select name="employeeType">
-                            <option value="0">Former Employee</option>
+                        <label for="employeeType">Select Employee Type: </label>
+                        <select name="addEmployeeType" id="employeeType" class="form-control" ng-model="addEmployee.employeeType" style="font-size: large">
+                            <!--<option value="0">Former Employee</option>-->
                             <option value="1">Employee</option>
                             <option value="2">Administrator</option>
                         </select>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add New Employee</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Modal for Updating an Employee in the Employees Table -->
+<div class="modal fade" id="updateEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel2">View Employee Details</h4>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Add New Employee</button>
-                </form>
-            </div>
+            <form ng-submit="updateEmployee()" name="formUpdateEmployee" role="form">
+                <div class="modal-body">
+                    <div class="alert alert-success text-center" ng-show="successMessage" role="alert">
+                        <h3>{{successMessage}}</h3>
+                    </div>
+
+                    <!--UserID Input -->
+                    <div class="form-group">
+                        <label for="employeeUID">User ID (UID):</label>
+                        <input type="text" name="addEmployeeUID" class="form-control" style="width:230px;" required maxlength="20" ng-model="formData.employeeUID" id="employeeUID">
+                    </div>
+                    <!--UserID Validation -->
+                    <div ng-messages="formUpdateEmployee.updateEmployeeUID.$error" style="margin-bottom:10px; font-style: italic; color: red">
+                        <div ng-message="required">*This Field is Required</div>
+                    </div>
+                    <!--First Name Input -->
+                    <div class="form-group">
+                        <label for="employeeFirstName">Employee First Name:</label>
+                        <input type="text" name="updateEmployeeFirstName" class="form-control" style="width:460px;" required maxlength="40" ng-model="formData.employeeFirstName" id="employeeFirstName">
+                    </div>
+                    <!--First Name Validation -->
+                    <div ng-messages="formUpdateEmployee.updateEmployeeFirstName.$error" style="margin-bottom:10px; font-style: italic; color: red">
+                        <div ng-message="required">*This Field is Required</div>
+                    </div>
+                    <!--Last Name Input -->
+                    <div class="form-group">
+                        <label for="employeeLastName">Employee Last Name:</label>
+                        <input type="text" name="updateEmployeeLastName" class="form-control" style="width:460px" required maxlength="40" ng-model="formData.employeeLastName" id="employeeLastName">
+                    </div>
+                    <!--Last Name Validation -->
+                    <div ng-messages="formUpdateEmployee.updateEmployeeLastName.$error" style="margin-bottom:10px; font-style: italic; color: red">
+                        <div ng-message="required">*This Field is Required</div>
+                    </div>
+                    <!--Employee Role -->
+                    <div class="form-group">
+                        <label for="employeeType">Select Employee Type: </label>
+                        <select name="updateEmployeeType" id="employeeType" class="form-control" ng-model="formData.employeeType" style="font-size: large">
+                            <!--<option value="0">Former Employee</option>-->
+                            <option value="1">Employee</option>
+                            <option value="2">Administrator</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add New Employee</button>
+
+                </div>
+            </form>
         </div>
     </div>
 </div>
