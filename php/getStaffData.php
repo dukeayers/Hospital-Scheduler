@@ -3,8 +3,10 @@ include 'SessionLogin.php';
 
 $sql = ("SELECT DISTINCT
 Employee_ID as ID,
+UID as uid,
 First_Name as fname,
-Last_Name as lname
+Last_Name as lname,
+User_Type as usertype
 FROM employee;");
 
 $result = $mysqli->query($sql) or die($mysqli->error);

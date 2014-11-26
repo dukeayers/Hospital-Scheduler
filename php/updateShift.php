@@ -1,7 +1,10 @@
 <?php
 include 'SessionLogin.php';
 
-$sql = ("UPDATE shift SET  Start_time= '".$_POST['shiftStart']."', end_time = '".$_POST['shiftEnd']."' WHERE SHIFT_ID ='".$_POST['shiftID']."';");
+#Prepared Statement
+$sql = ("UPDATE shift SET  Start_time= (?), end_time = (?) WHERE SHIFT_ID =(?);");
+$stmt = $mysqli->prepare($sql);
+$stmt->bind_param("ssi", $_POST['shiftStart'], $_POST['shiftEnd'], $_POST['shiftID']);
+$result = $stmt->execute();
 
-$result = $mysqli->query($sql) or die($mysqli->error);
 echo json_encode($result);

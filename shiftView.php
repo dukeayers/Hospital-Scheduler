@@ -3,6 +3,7 @@ $title = 'Shift Editor';
 include_once "php/headSection.php";
 include_once "php/navBar.php";
 include_once "php/sideBar.php";
+include_once "php/footer.php";
 ?>
 
     <body  ng-app="calendarApp" ng-controller="controller" ng-init="getShifts()">
@@ -23,14 +24,14 @@ include_once "php/sideBar.php";
         <div class="table-responsive text-center">
             <table class="table table-striped table-hover tablebordertop">
                 <thead>
-                <td>Shift ID</td>
+                <!--<td>Shift ID</td>-->
                 <td>Shift Start Time</td>
                 <td>Shift End Time</td>
                 <td></td>
                 </thead>
                 <tbody>
                 <tr ng-repeat="data in shifts"  data-toggle="modal" data-target="#myModal" ng-click="getShiftDetails(data.ID,data.Start, data.End)"  >
-                    <td>{{data.ID}}</td>
+                    <!--<td>{{data.ID}}</td>-->
                     <td>{{data.Start}}</td>
                     <td>{{data.End}}</td>
                     <td><span class="glyphicon glyphicon-info-sign"></span></td>
@@ -55,14 +56,11 @@ include_once "php/sideBar.php";
                     </div>
                     <form ng-submit="addNewShift()" name="formAddShift" role="form">
                         <div class="form-group">
-                            <label for="shiftID">Shift ID:</label>
-                            <input type="text" class="form-control" ng-model="addShift.shiftID" id="shiftID" placeholder="Enter Shift ID">
-                        </div>
-                        <div class="form-group">
                             <label for="shiftBegin">Shift Start:</label>
                             <input type="text" name="addShiftStart" class="form-control" style="width:80px;" required ng-pattern="/^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/" minlength="5" maxlength="5" ng-model="addShift.shiftBegin" id="shiftBegin" placeholder="HH:MM">
                         </div>
-                        <div ng-messages="formAddShift.addShiftStart.$error" style="margin-bottom:10px;">
+                        <div ng-messages="formAddShift.addShiftStart.$error" style="margin-bottom:10px;font-style: italic; color: red"">
+                            <div ng-message="required">*This Field is Required</div>
                             <div ng-message="minlength">A minimum of 5 characters is required.</div>
                             <div ng-message="pattern">You Must enter the time in military format (e.g 02:30 or 14:23)</div>
                         </div>
@@ -70,7 +68,8 @@ include_once "php/sideBar.php";
                             <label for="shiftClose">Shift End:</label>
                             <input type="text" name="addShiftEnd" class="form-control" style="width:80px;" required ng-pattern="/^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/" minlength="5" maxlength="5" ng-model="addShift.shiftClose" id="shiftClose" placeholder="HH:MM">
                         </div>
-                        <div ng-messages="formAddShift.addShiftEnd.$error" style="margin-bottom:10px;">
+                        <div ng-messages="formAddShift.addShiftEnd.$error" style="margin-bottom:10px;font-style: italic; color: red"" >
+                            <div ng-message="required">*This Field is Required</div>
                             <div ng-message="minlength">A minimum of 5 characters is required.</div>
                             <div ng-message="pattern">You Must enter the time in military format (e.g 02:30 or 14:23)</div>
                         </div>
@@ -104,17 +103,19 @@ include_once "php/sideBar.php";
                         </div>
                         <div class="form-group">
                             <label for="shiftstart">Shift Start:</label>
-                            <input type="type" ng-pattern="/^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/" style="width:70px;"  class="form-control input-xs" name="updateShiftStart" maxlength="5"  minlength="5" ng-model="formData.shiftStart" id="shiftStart" placeholder="HH:MM">
+                            <input type="type" ng-pattern="/^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/" required style="width:70px;"  class="form-control input-xs" name="updateShiftStart" maxlength="5"  minlength="5" ng-model="formData.shiftStart" id="shiftStart" placeholder="HH:MM">
                         </div>
-                        <div ng-messages="formUpdateShift.updateShiftStart.$error" style="margin-bottom:10px;">
+                        <div ng-messages="formUpdateShift.updateShiftStart.$error" style="margin-bottom:10px;font-style: italic; color: red"">
+                            <div ng-message="required">*This Field is Required</div>
                             <div ng-message="minlength">A minimum of 5 characters is required.</div>
                             <div ng-message="pattern">You Must enter the time in military format (e.g 02:30 or 14:23)</div>
                         </div>
                         <div class="form-group">
                             <label for="shiftend">Shift End Time:</label>
-                            <input type="text" class="form-control" style="width:70px;"  ng-model="formData.shiftEnd" ng-pattern="/^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/" name="updateShiftEnd" minlength="5" maxlength="5" id="shiftEnd" placeholder="HH:MM">
+                            <input type="text" class="form-control" style="width:70px;" required ng-model="formData.shiftEnd" ng-pattern="/^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/" name="updateShiftEnd" minlength="5" maxlength="5" id="shiftEnd" placeholder="HH:MM">
                         </div>
-                        <div ng-messages="formUpdateShift.updateShiftEnd.$error" style="margin-bottom:10px;">
+                        <div ng-messages="formUpdateShift.updateShiftEnd.$error"  style="margin-bottom:10px;font-style: italic; color: red" ">
+                            <div ng-message="required">*This Field is Required</div>
                             <div ng-message="minlength">A minimum of 5 characters is required.</div>
                             <div ng-message="pattern">You Must enter the time in military format (e.g 02:30 or 14:23)</div>
                         </div>
@@ -128,6 +129,3 @@ include_once "php/sideBar.php";
         </div>
     </div>
     </div>
-<?php
-include_once "php/footer.php";
-?>

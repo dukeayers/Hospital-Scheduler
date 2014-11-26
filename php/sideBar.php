@@ -1,4 +1,3 @@
-<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 <div class="collapse navbar-collapse">
     <ul class="nav navbar-nav side-nav">
         <li class="active">

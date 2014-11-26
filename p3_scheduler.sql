@@ -29,11 +29,13 @@ USE `p3_scheduler`;
 --
 
 CREATE TABLE IF NOT EXISTS `employee` (
-  `Employee_ID` int(10) NOT NULL,
+`Employee_ID` int(10) NOT NULL,
+  `UID` varchar(20) NOT NULL COMMENT 'User ID',
+  `PWD` char(32) NOT NULL,
   `First_Name` varchar(40) NOT NULL,
   `Last_Name` varchar(40) NOT NULL,
-  PRIMARY KEY (`Employee_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `User_Type` int(1) NOT NULL DEFAULT '1' COMMENT '0: Former Staff 1:Staff 2:Administrator'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Dumping data for table `employee`
@@ -131,7 +133,7 @@ INSERT INTO `schedule` (`Shift_ID`, `Employee_ID`, `Day`, `Date`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `shift` (
-  `Shift_ID` int(10) NOT NULL,
+  `Shift_ID` int(10) NOT NULL AUTO_INCREMENT,
   `Start_Time` varchar(5) NOT NULL,
   `End_Time` varchar(5) NOT NULL,
   PRIMARY KEY (`Shift_ID`)

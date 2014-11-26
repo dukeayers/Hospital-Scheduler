@@ -4,8 +4,8 @@ $title = 'Employee Editor';
 include_once "php/headSection.php";
 include_once "php/navBar.php";
 include_once "php/sideBar.php";
+include_once "php/footer.php";
 ?>
-
 
 <body  ng-app="calendarApp" ng-controller="controller" ng-init="getEmployees()">
 
@@ -15,13 +15,6 @@ include_once "php/sideBar.php";
     </div>
 </div>
 
-<!--
-EXAMPLE CODE
-<div class="col-sm-3">
-    <button class="btn btn-transparent" data-toggle="modal" data-target="#newShift" style="width:100%; font-weight:800;">Add New Shift</button>
-    <button class="btn btn-transparent" style="width:100%; font-weight:800; margin-top:10px;">Delete Shift</button>
-</div>
--->
 <div class="container">
     <div class="btn-group btn-group-lg" role="group" aria-label="...">
         <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#newEmployee">New Employee</button>
@@ -34,28 +27,23 @@ EXAMPLE CODE
     <table id="staff" class="table table-striped table-hover tablebordertop">
         <thead>
         <tr>
-            <th>ID</th>
+            <!--<th>ID</th>-->
+            <th>UID</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>User Type</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr class="" ng-repeat="data in employee" ng-click="getStaffData(data.ID,data.fname, data.lname)"  >
-            <td>{{data.ID}}</td>
+        <tr class="" ng-repeat="data in employee" ng-click="getStaffData(data.ID, data.uid, data.fname, data.lname, data.usertype)"  >
+            <!--<td>{{data.ID}}</td> -->
+            <td>{{data.uid}}</td>
             <td>{{data.fname}}</td>
             <td>{{data.lname}}</td>
+            <td>{{data.usertype}}<?php ?></td>
         </tr>
         </tbody>
-        <!--
-        <tfoot>
-        <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-        </tr>
-        </tfoot>
-        -->
     </table>
 </div>
 
@@ -72,21 +60,41 @@ EXAMPLE CODE
                     <h3>{{successMessage}}</h3>
                 </div>
                 <form ng-submit="addNewEmployee()" name="formAddEmployee" role="form">
+                    <!--UserID Input -->
+                    <div class="form-group">
+                        <label for="employeeUID">User ID (UID):</label>
+                        <input type="text" name="addEmployeeUID" class="form-control" style="width:230px;" required maxlength="20" ng-model="addEmployee.employeeUID" id="employeeUID" placeholder="">
+                    </div>
+                    <!--UserID Validation -->
+                    <div ng-messages="formAddEmployee.addEmployeeUID.$error" style="margin-bottom:10px; font-style: italic; color: red">
+                        <div ng-message="required">*This Field is Required</div>
+                    </div>
+                    <!--First Name Input -->
                     <div class="form-group">
                         <label for="employeeFirstName">Employee First Name:</label>
                         <input type="text" name="addEmployeeFirstName" class="form-control" style="width:460px;" required maxlength="40" ng-model="addEmployee.employeeFirstName" id="employeeFirstName" placeholder="">
                     </div>
+                    <!--First Name Validation -->
                     <div ng-messages="formAddEmployee.addEmployeeFirstName.$error" style="margin-bottom:10px; font-style: italic; color: red">
                         <div ng-message="required">*This Field is Required</div>
                     </div>
+                    <!--Last Name Input -->
                     <div class="form-group">
                         <label for="employeeLastName">Employee Last Name:</label>
                         <input type="text" name="addEmployeeLastName" class="form-control" style="width:460px" required maxlength="40" ng-model="addEmployee.employeeLastName" id="employeeLastName" placeholder="">
                     </div>
+                    <!--Last Name Validation -->
                     <div ng-messages="formAddEmployee.addEmployeeLastName.$error" style="margin-bottom:10px; font-style: italic; color: red">
                         <div ng-message="required">*This Field is Required</div>
                     </div>
-
+                    <!--Employee Role -->
+                    <div class="form-group">
+                        <select name="employeeType">
+                            <option value="0">Former Employee</option>
+                            <option value="1">Employee</option>
+                            <option value="2">Administrator</option>
+                        </select>
+                    </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -96,9 +104,4 @@ EXAMPLE CODE
         </div>
     </div>
 </div>
-
-<?php
-include_once "php/footer.php";
-?>
-
 </body>

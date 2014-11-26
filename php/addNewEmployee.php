@@ -10,9 +10,9 @@ include 'SessionLogin.php';
 #$result = $mysqli->query($sql) or die($mysqli->error);
 
 #prepared statements
-$sql = ("INSERT INTO employee (First_Name, Last_Name) VALUES (?, ?)");
+$sql = ("INSERT INTO employee (UID, First_Name, Last_Name) VALUES (?, ?, ?)");
 $stmt = $mysqli->prepare($sql);
-$stmt->bind_param("ss", $_POST['employeeFirstName'], $_POST['employeeLastName']);
+$stmt->bind_param("sss", $_POST['employeeUID'], $_POST['employeeFirstName'], $_POST['employeeLastName']);
 $result = $stmt->execute();
 
 echo json_encode($result);
