@@ -9,7 +9,11 @@
  */?>
 <?php
 include_once "php/headSection.php";
+include_once "php/navBar.php";
+include_once "php/sideBar.php";
 ?>
+
+<!--
 <style>
     .sidebar{
         height:100%;
@@ -38,11 +42,11 @@ include_once "php/headSection.php";
     }
 
 </style>
-    <body  ng-app="calendarApp" ng-controller="controller" ng-init="findMonday()" style="background:#d3d3d3;">
-<?php
-include_once "php/navBar.php";
-?>
+-->
 
+<body  ng-app="calendarApp" ng-controller="controller" ng-init="findMonday()">
+
+<!--
 <div class="sidebar col-xs-2" style="padding: 0 !important;">
     <ul class="nav nav-pills nav-stacked text-center" style="width:100%; border-radius:0 !important; ">
         <li class="active1"><a style="color:white; font-weight:800; font-size:18px;" href="#">Dashboard</a></li>
@@ -56,8 +60,9 @@ include_once "php/navBar.php";
 <!--        <button class="btn btn-primary " >Calendar</button>-->
 <!--        <button class="btn btn-primary " >Manage Shifts</button>-->
 <!--        <button class="btn btn-primary " >My Information</button>-->
-<!--    </div>-->
+<!--    </div>
 </div>
+-->
 
 <div class="col-xs-10 col-xs-push-2" style="background:white; border-radius: 5px; margin-left:25px; width:80.33%;">
     <div class="row text-center">

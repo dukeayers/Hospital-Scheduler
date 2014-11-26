@@ -9,6 +9,7 @@
  */?>
 <?php
 include_once "php/headSection.php";
+include_once "php/sidebar.php";
 ?>
 <body  ng-app="calendarApp" ng-controller="controller" ng-init="findMonday()">
 <?php
