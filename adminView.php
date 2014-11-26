@@ -91,11 +91,16 @@ include_once "php/footer.php";
                     <!--Employee Role -->
                     <div class="form-group">
                         <label for="employeeType">Select Employee Type: </label>
-                        <select name="addEmployeeType" id="employeeType" class="form-control" ng-model="addEmployee.employeeType" style="font-size: large">
+                        <select name="addEmployeeType" required id="employeeType" class="form-control" ng-model="addEmployee.employeeType" style="font-size: large">
                             <!--<option value="0">Former Employee</option>-->
+                            <option value="">-Select your option-</option>
                             <option value="1">Employee</option>
                             <option value="2">Administrator</option>
                         </select>
+                    </div>
+                    <!--Employee Role Validation -->
+                    <div ng-messages="formAddEmployee.addEmployeeType.$error" style="margin-bottom:10px; font-style: italic; color: red">
+                        <div ng-message="required">*This Field is Required</div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -123,7 +128,7 @@ include_once "php/footer.php";
                     <!--UserID Input -->
                     <div class="form-group">
                         <label for="employeeUID">User ID (UID):</label>
-                        <input type="text" name="addEmployeeUID" class="form-control" style="width:230px;" required maxlength="20" ng-model="formData.employeeUID" id="employeeUID">
+                        <input type="text" name="updateEmployeeUID" class="form-control" style="width:230px;" required maxlength="20" ng-model="formData.employeeUID" id="employeeUID">
                     </div>
                     <!--UserID Validation -->
                     <div ng-messages="formUpdateEmployee.updateEmployeeUID.$error" style="margin-bottom:10px; font-style: italic; color: red">
@@ -150,16 +155,21 @@ include_once "php/footer.php";
                     <!--Employee Role -->
                     <div class="form-group">
                         <label for="employeeType">Select Employee Type: </label>
-                        <select name="updateEmployeeType" id="employeeType" class="form-control" ng-model="formData.employeeType" style="font-size: large">
+                        <select name="updateEmployeeType" id="employeeType" required class="form-control" ng-model="formData.employeeType" style="font-size: large">
                             <!--<option value="0">Former Employee</option>-->
+                            <option value="">-Select your option-</option>
                             <option value="1">Employee</option>
                             <option value="2">Administrator</option>
                         </select>
                     </div>
+                    <!--Employee Role Validation -->
+                    <div ng-messages="formUpdateEmployee.updateEmployeeType.$error" style="margin-bottom:10px; font-style: italic; color: red">
+                        <div ng-message="required">*This Field is Required</div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Add New Employee</button>
+                    <button type="submit" class="btn btn-primary">Update Employee Details</button>
 
                 </div>
             </form>
