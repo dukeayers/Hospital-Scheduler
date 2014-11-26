@@ -3,6 +3,7 @@
 $title = 'Employee Editor';
 include_once "php/headSection.php";
 include_once "php/navBar.php";
+include_once "php/sideBar.php";
 ?>
 
 
@@ -30,7 +31,7 @@ EXAMPLE CODE
 
 
 
-    <table id="staff" class="table table-striped table-hover tablebordertop" cellspacing="0">
+    <table id="staff" class="table table-striped table-hover tablebordertop">
         <thead>
         <tr>
             <th>ID</th>
